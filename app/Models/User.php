@@ -7,11 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Cashier\Billable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Billable;
+    use HasApiTokens;
     use Notifiable;
     use SoftDeletes;
 
@@ -25,10 +25,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_name',
         'email',
         'password',
-        'stripe_id',
-        'card_brand',
-        'card_last_four',
-        'trial_ends_at',
     ];
 
     /**
@@ -54,39 +50,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'trial_ends_at',
     ];
 
-    public function addresses()
-    {
-        return $this->belongsToMany(
-            Address::class,
-            'user_addresses',
-            'user_id',
-            )
-            ->withPivot([
-                'created_at',
-                'updated_at',
-                'deleted_at',
-            ]);
-    }
-
-    /**
-     * Retrieves the users organisations.
-     *
-     * @return BelongsToMany
-     */
-    public function organisations()
-    {
-        return $this->belongsToMany(
-            Organisation::class,
-            'staff',
-            'user_id',
-            )
-            ->withPivot([
-                'created_at',
-                'updated_at',
-                'deleted_at',
-            ]);
-    }
-
     /**
      * Retrieves the users roles.
      *
@@ -101,54 +64,4 @@ class User extends Authenticatable implements MustVerifyEmail
                 'deleted_at',
             ]);
     }
-
-//    /**
-//     * Gets user permissions ids.
-//     *
-//     * @return array
-//     */
-//    public function getPermissions()
-//    {
-//        $permissions = [];
-//
-//        foreach ($this->roles as $role) {
-//            $ids = $role->permissions->pluck('id');
-//
-////            array_map(function (Permission $permission) {
-////                return $permission->id;
-////            }, $role->permissions->all());
-//
-//            $permissions = array_merge($permissions, $ids);
-//        }
-//
-//        return $permissions;
-//    }
-//
-//    /**
-//     * Determines whether the user has a permission.
-//     *
-//     * @param string $permission
-//     *
-//     * @return boolean
-//     */
-//    public function hasPermission(string $permission)
-//    {
-//        $found = false;
-//
-//        foreach ($this->roles as $role) {
-//            foreach ($role->permissions as $perm) {
-//                if ($perm->id === $permission) {
-//                    $found = true;
-//
-//                    break;
-//                }
-//            }
-//
-//            if ($found) {
-//                break;
-//            }
-//        }
-//
-//        return $found;
-//    }
 }

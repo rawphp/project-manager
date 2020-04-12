@@ -5,20 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PaymentMethod extends Model
+class Project extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
+        'name',
+        'description',
+        'start_date',
+        'end_date',
         'user_id',
-        'stripe_pm_id',
-        'billing_name',
-        'type',
-        'exp_month',
-        'exp_year',
-        'last4',
-        'country',
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'project_id');
+    }
 
     public function user()
     {
