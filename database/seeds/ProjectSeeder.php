@@ -2,6 +2,7 @@
 
 use App\Models\Project;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
@@ -18,6 +19,8 @@ class ProjectSeeder extends Seeder
                 'name' => 'Project Manager',
                 'description' => 'This project aims to create an app to track project tasks.',
                 'user_id' => 1,
+                'start_date' => Carbon::create(2020, 4, 12),
+                'end_date' => Carbon::create(2020, 5, 12),
             ]
         ];
 

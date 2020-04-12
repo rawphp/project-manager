@@ -15,6 +15,7 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->boolean('completed')->default(false);
             $table->unsignedBigInteger('project_id');
             $table->timestamps();
             $table->softDeletes();
