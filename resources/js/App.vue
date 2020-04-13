@@ -1,33 +1,43 @@
 <template>
-  <div class="container">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <router-link to="/" class="nav-link">Home</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/create" class="nav-link">Create Post</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/posts" class="nav-link">Posts</router-link>
-        </li>
-      </ul>
-    </nav>
-    <br />
-    <div>
-      <transition name="fade">
-        <router-view></router-view>
-      </transition>
+    <div class="container-fluid">
+        <Nav/>
+        <br/>
+        <div>
+            <transition name="fade">
+                <div class="container">
+                    <router-view></router-view>
+                </div>
+            </transition>
+        </div>
     </div>
-  </div>
 </template>
+<script>
+    import Nav from './components/Nav.vue';
+
+    export default {
+        name: 'App',
+        components: {
+            Nav
+        }
+    }
+</script>
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
-}
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .container-fluid {
+        padding: 0;
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0;
+    }
 </style>
