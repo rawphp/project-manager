@@ -13,14 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/{any}', fn () => view('post'))->where('any', '.*');
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{any}', fn () => view('app'))->where('any', '.*');

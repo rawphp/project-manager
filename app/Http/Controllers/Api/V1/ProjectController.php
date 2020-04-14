@@ -12,13 +12,21 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return JsonResource
      */
     public function index(Request $request)
     {
         $user = $request->user();
 
-        $projects = Project::where('user_id', $user->id)->get();
+        $perPage = $request->get('perPage', null);
+
+        if ($perPage) {
+            $projects = Project::where('user_id', $user->id)->paginate($perPage);
+        } else {
+            $projects = Project::where('user_id', $user->id)->get();
+        }
 
         return JsonResource::make($projects);
     }

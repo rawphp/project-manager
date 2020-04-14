@@ -4,9 +4,7 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
-
-            </b-navbar-nav>
+            <b-navbar-nav></b-navbar-nav>
 
             <b-navbar-nav v-if="guest" class="ml-auto">
                 <b-nav-item :to="{name: 'docs'}">Docs</b-nav-item>
@@ -23,38 +21,29 @@
         </b-collapse>
     </b-navbar>
 </template>
+
 <script>
-    import {mapGetters, mapActions} from 'vuex';
+    import {mapState, mapActions} from 'vuex';
 
     export default {
         name: 'Nav',
         methods: {
-            ...mapGetters(['currentUser']),
             ...mapActions(['logout']),
             onLogout() {
                 this.logout();
             }
         },
-        computed: {
-            user() {
-                return this.$store.state.auth.user;
-            },
-            fullName() {
-                if (this.user === null) {
-                    return '';
-                }
-
-                return `${this.user.first_name} ${this.user.last_name}`;
-            },
-            guest() {
-                return this.$store.state.auth.user === null;
-            }
-        }
+        computed: mapState({
+            guest: (state) => state.auth.user === null,
+            user: (state) => state.auth.user,
+            fullName: (state) => `${state.auth.user.first_name} ${state.auth.user.last_name}`,
+        }),
     }
 </script>
+
 <style scoped>
     .navbar-brand a, b-nav-item .nav-link {
-        decoration: none;
+        text-decoration: none;
         color: #fff;
     }
 </style>
